@@ -8,8 +8,8 @@ public class Admin extends Manager{
         super(name, password);
     }
 
-    void displayControl() {
-        System.out.println("Setting\nMenu\t\t\t\tEvents\t\t\t\tTables\n\nUsers\t\t\t\tRestaurant\t\t\tReports");
+    void displayMainScreen() {
+        System.out.println("Menu\t\t\t\tEvents\t\t\t\tTables\n\nUsers\t\t\t\tRestaurant\t\t\tReports");
     }
 
 }
