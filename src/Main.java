@@ -25,17 +25,16 @@ public class Main {
 //        menu.controlSecond.add("Manty");
 //        menu.controlSecond.add("Boso");
 //        menu.displaySecond();
-        System.out.println("Put the date\nYear|Month|Day");
-        System.out.println("\n\n\n\n");
-        int year = scanner.nextInt();
-        int month = scanner.nextInt();
-        int day = scanner.nextInt();
+        System.out.println("Put the date\nYear|Month|Day|Event Status");
+        String eventStatus = scanner.nextLine();
+        events.markedDays.add(eventStatus);
+        String[] splitEventStatus = eventStatus.split("\\s+");
+        int year = Integer.parseInt(splitEventStatus[0]);
+        int month = Integer.parseInt(splitEventStatus[1]);
+        int day = Integer.parseInt(splitEventStatus[2]);
         events.displayDate();
-        events.dateTime = LocalDate.of(year, month, day);
-//        events.displayDate();
-//        String date = scanner.nextLine();
-//        events.date.add(date);
-//        events.displayDate();
+        System.out.println("\n\n\n\n");
+        events.calendar = LocalDate.of(year, month, day);
         events.displayDate();
     }
 }
