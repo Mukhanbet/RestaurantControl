@@ -5,30 +5,34 @@ public class Menu {
     ArrayList<String> controlFirst = new ArrayList<>();
     ArrayList<String> controlSecond = new ArrayList<>();
 
-    void displayMenu() {
+    void displayCategoryMenu() {
         System.out.println("SNACKS\t\t\tFIRST\t\t\tSECOND");
     }
     void displaySnacks() {
+        System.out.println("\t\t\t\t\t\t\t\u001B[94mSNACKS\u001B[0m");
         displayDishes(controlSnacks);
     }
 
     void displayFirst() {
+        System.out.println("\t\t\t\t\t\t\t\u001B[94mFIRST\u001B[0m");
         displayDishes(controlFirst);
     }
 
     void displaySecond() {
+        System.out.println("\t\t\t\t\t\t\t\u001B[94mSECOND\u001B[0m");
         displayDishes(controlSecond);
     }
     public static void displayDishes(ArrayList<String> menuDishes) {
-        System.out.println("Setting");
-//        System.out.println(menuDishes.size());
-        int count = 0;
-        for (int i = 0; i < menuDishes.size(); i++) {
-            System.out.print(menuDishes.get(i) + "\t\t");
-            count++;
-            if (count % 3 == 0) {
+        System.out.println("<\u001B[92mexit\u001B[0m\t\t\t\t\t\t\t\t\t\t\t\t\t\u001B[97madd\u001B[0m");
+        int orderElement = 0;
+        while(orderElement < menuDishes.size()) {
+            String[] splitDishes = menuDishes.get(orderElement).split("\\s+", 2);
+            System.out.print(splitDishes[1] + "\u001B[97m(\u001B[0m\u001B[91m" + splitDishes[0] + "\u001B[0m\u001B[97m)\u001B[0m\t\t\t");
+            orderElement++;
+            if (orderElement % 3 == 0) {
                 System.out.println();
             }
         }
+        System.out.println();
     }
 }
