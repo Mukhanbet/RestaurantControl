@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Manager {
+public class Manager{
     ArrayList<String> controlTables = new ArrayList<>();
     String name;
     int password;

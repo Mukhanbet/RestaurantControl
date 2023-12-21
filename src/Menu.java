@@ -10,20 +10,22 @@ public class Menu {
     }
     void displaySnacks() {
         System.out.println("\t\t\t\t\t\t\t\u001B[94mSNACKS\u001B[0m");
+        System.out.println("<\u001B[92mexit\u001B[0m\t\t\t\t\t\t\t\t\t\t\t\t\t\u001B[97madd\u001B[0m");
         displayDishes(controlSnacks);
     }
 
     void displayFirst() {
         System.out.println("\t\t\t\t\t\t\t\u001B[94mFIRST\u001B[0m");
+        System.out.println("<\u001B[92mexit\u001B[0m\t\t\t\t\t\t\t\t\t\t\t\t\t\u001B[97madd\u001B[0m");
         displayDishes(controlFirst);
     }
 
     void displaySecond() {
         System.out.println("\t\t\t\t\t\t\t\u001B[94mSECOND\u001B[0m");
+        System.out.println("<\u001B[92mexit\u001B[0m\t\t\t\t\t\t\t\t\t\t\t\t\t\u001B[97madd\u001B[0m");
         displayDishes(controlSecond);
     }
     public static void displayDishes(ArrayList<String> menuDishes) {
-        System.out.println("<\u001B[92mexit\u001B[0m\t\t\t\t\t\t\t\t\t\t\t\t\t\u001B[97madd\u001B[0m");
         int orderElement = 0;
         while(orderElement < menuDishes.size()) {
             String[] splitDishes = menuDishes.get(orderElement).split("\\s+", 2);
