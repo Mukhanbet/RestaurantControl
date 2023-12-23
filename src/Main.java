@@ -8,18 +8,146 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Menu menu = new Menu();
-        Events events = new Events(menu.controlSnacks, menu.controlFirst, menu.controlSecond, menu);
-        Admin admin = new Admin("Admin", 0);
-        Manager manager = new Manager("Manager", 1);
         Restaurant restaurant = new Restaurant();
+        Users users = new Users(restaurant.restaurantsData);
+        Events events = new Events(menu.controlSnacks, menu.controlFirst, menu.controlSecond, menu);
+        Admin admin = new Admin("Admin", "0");
+        Manager manager = new Manager("Manager", "1");
         ArrayList<String> waitersName = new ArrayList<>();
-        standardMenu(menu.controlFirst, menu.controlSecond, menu.controlSnacks) ;
-//        System.out.print("Enter your name: ");
-//        String userName = scanner.next();
-//        System.out.println("Choose your role: \n admin    manager    waiter");
-//        String userRole = scanner.next();
-//        System.out.print("Enter password: ");
-//        int usersPassword = scanner.nextInt();
+        standardMenu(menu.controlFirst, menu.controlSecond, menu.controlSnacks);
+        int countAdminAttempt = 5;
+        int countManagerAttempt = 5;
+
+        while(true) {
+            System.out.println("Choose your role:\n\t\u001B[91m•\u001B[0madmin  \u001B[91m•\u001B[0mmanager  \u001B[91m•\u001B[0mwaiter");
+            String getInput = scanner.nextLine();
+            System.out.println();
+            if("admin".contains(getInput.trim().toLowerCase())) {
+                if (isCorrectData(admin.name, admin.password, countAdminAttempt)) {
+                    countAdminAttempt = 5;
+                    while(true) {
+                        admin.displayMainScreen();
+                        getInput = scanner.nextLine();
+
+                    }
+                }
+            } else if ("manager".contains(getInput.trim().toLowerCase())) {
+                if (isCorrectData(manager.name, manager.password, countManagerAttempt)) {
+                    countManagerAttempt = 5;
+                    while(true) {
+                        manager.displayMainScreen();
+                        getInput = scanner.nextLine();
+
+                    }
+                }
+            }
+        }
+
+//        users.managersData.add("NUR 2004 manager");
+//        users.managersData.add("ADILET 2002 manager");
+//        users.managersData.add("KANAT 20 manager");
+//        restaurant.restaurantsData.add("KHAN, Ankara 28, ADILET, 45, ON");
+//        users.waitersData.add("ALIBABA 1000");
+//        users.waitersData.add("MELANA 930");
+//        users.waitersData.add("HUSEN 500");
+//
+//        while(true) {
+//            System.out.println("\t\t\t•\u001B[92mMANAGER\u001B[0m\t\t•\u001B[93mWAITER\u001B[0m");
+//            String getInput = scanner.nextLine();
+//            if("managers".contains(getInput.trim().toLowerCase())) {
+//                while(true) {
+//                    users.displayManagersData();
+//                    getInput = scanner.nextLine();
+//                    if("exit".contains(getInput.trim().toLowerCase())) {
+//                        break;
+//                    } else if ("change".contains(getInput.trim().toLowerCase())) {
+//                        while(true) {
+//                            System.out.println("Whose data do you want to change? ");
+//                            getInput = scanner.nextLine();
+//                            if(isContains(users.managersData, getInput.toUpperCase())) {
+//                                int index = getIndex(users.managersData, getInput.toUpperCase());
+//                                while(true) {
+//                                    String managerData = users.managersData.get(index);
+//                                    String[] splitManagerData = managerData.split("\\s+");
+//                                    System.out.println("<\u001B[92mexit\t\t\t\t\t\t\u001B[91mdelete\u001B[0m\n \tName\t\t\t|\t\u001B[97m" + splitManagerData[0] + "\u001B[0m\n \tPassword\t\t|\t\u001B[94m" + splitManagerData[1] + "\u001B[0m");
+//                                    System.out.println("\n\t\t\u001B[91m| \u001B[97mName \u001B[91m|  | \u001B[97mPassword \u001B[91m|\u001B[0m");
+//                                    getInput = scanner.nextLine();
+//                                    if("name".contains(getInput.trim().toLowerCase())) {
+//                                        changeUsersData (users.managersData, splitManagerData[0], managerData, index);
+//                                    } else if ("password".contains(getInput.trim().toLowerCase())) {
+//                                        changeUsersData(users.managersData, splitManagerData[1], managerData, index);
+//                                    } else if ("exit".contains(getInput.trim().toLowerCase())) {
+//                                        break;
+//                                    } else if ("delete".contains(getInput.trim().toLowerCase())) {
+//                                        users.managersData.remove(index);
+//                                        break;
+//                                    }
+//                                }
+//                            } else {
+//                                System.out.println("\u001B[92mIncorrect input\u001B[0m!\nTry again");
+//                            }
+//                            if("exit".contains(getInput.trim().toLowerCase()) || "delete".contains(getInput.trim().toLowerCase())) {
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//            } else if ("waiter".contains(getInput.trim().toLowerCase())) {
+//               while(true) {
+//                   users.displayWaitersData();
+//                   getInput = scanner.nextLine();
+//                   if("exit".contains(getInput.trim().toLowerCase())) {
+//                       break;
+//                   } else if ("change".contains(getInput.trim().toLowerCase())) {
+//                       System.out.println("\n\t\t\u001B[91m| \u001B[97mName \u001B[91m|  | \u001B[97mPassword \u001B[91m|\u001B[0m");
+//                       getInput = scanner.nextLine();
+//                       if ("name".contains(getInput.trim().toLowerCase())) {
+//                           while (true) {
+//                               System.out.println("Whose name do you want to change? ");
+//                               getInput = scanner.nextLine();
+//                               if(isContains(users.waitersData, getInput)) {
+//                                   int index = getIndex(users.waitersData, getInput);
+//                                   String[] splitWaitersData = users.waitersData.get(index).split("\\s+");
+//                                   System.out.print("Name: ");
+//                                   String newName = scanner.nextLine();
+//                                   while(true) {
+//                                       System.out.println("\u001B[91m" + splitWaitersData[0] + "\u001B[0m --> \u001B[97m" + newName + "\u001B[0m\n\t\t\u001B[97mcancel\u001B[0m\t\u001B[92msave\u001B[0m");
+//                                       getInput = scanner.nextLine();
+//                                       if ("save".contains(getInput.trim().toLowerCase())) {
+//                                           users.waitersData.set(index, newName + " " + splitWaitersData[1]);
+//                                           break;
+//                                       } else if ("cancel".contains(getInput.trim().toLowerCase())) {
+//                                           break;
+//                                       }
+//                                   }
+//                               } else {
+//                                   System.out.println("\u001B[92mIncorrect input\u001B[0m!\nTry again");
+//                               }
+//                               if("save".contains(getInput.trim().toLowerCase()) || "cancel".contains(getInput.trim().toLowerCase())) {
+//                                   break;
+//                               }
+//                           }
+//                       } else if ("password".contains(getInput.trim().toLowerCase())) {
+//                           System.out.print("  Password\n  \u001B[91m| \u001B[97m " + users.waitersPassword + " \u001B[91m|\u001B[0m\n\n New password: ");
+//                           int newPassword = scanner.nextInt();
+//                           scanner.nextLine();
+//                           while(true) {
+//                               System.out.println("\u001B[91m" + users.waitersPassword + "\u001B[0m --> \u001B[97m" + newPassword + "\u001B[0m\n\t\t\u001B[97mcancel\u001B[0m\t\u001B[92msave\u001B[0m");
+//                               getInput = scanner.nextLine();
+//                               if("save".contains(getInput.trim().toLowerCase())) {
+//                                   users.waitersPassword = newPassword;
+//                                   break;
+//                               } else if ("cancel".contains(getInput.trim().toLowerCase())) {
+//                                   break;
+//                               }
+//                           }
+//                       }
+//                   }
+//               }
+//            }
+//        }
+
+//  Menu
 //        while(true) {
 //            menu.displayCategoryMenu();
 //            String getInput = scanner.nextLine();
@@ -62,11 +190,11 @@ public class Main {
 //            }
 //        }
 
+//  Events
 //        events.displayDate();
 //        while(true) {
-//            menu.displayCategoryMenu();
 //            String getInput = scanner.nextLine();
-//            if(getInput.equalsIgnoreCase("next")) {
+//            if("next".contains(getInput.trim().toLowerCase())) {
 //                if(events.calendar.getMonthValue() == 12) {
 //                    events.calendar = LocalDate.of(events.calendar.getYear() + 1, 1, LocalDate.now().getDayOfMonth());
 //                } else {
@@ -74,7 +202,7 @@ public class Main {
 //                }
 //                System.out.println("Calendar" + events.calendar);
 //                events.displayDate();
-//            } else if (getInput.equalsIgnoreCase("back")) {
+//            } else if ("back".contains(getInput.trim().toLowerCase())) {
 //                if(events.calendar.getMonthValue() == 1 ) {
 //                    events.calendar = LocalDate.of(events.calendar.getYear() - 1, 12, LocalDate.now().getDayOfMonth());
 //                } else {
@@ -82,7 +210,7 @@ public class Main {
 //                }
 //                System.out.println("Calendar" + events.calendar);
 //                events.displayDate();
-//            } else if (getInput.equalsIgnoreCase("exit")){
+//            } else if ("exit".contains(getInput.trim().toLowerCase())){
 //                break;
 //            } else if (0 < Integer.parseInt(getInput) && Integer.parseInt(getInput) < 32) {
 //                int day = Integer.parseInt(getInput);
@@ -91,24 +219,46 @@ public class Main {
 //                    while(true) {
 //                        int indexThatDay = events.markedDays.indexOf(selectedTime);
 //                        String[] splitStatus = events.statusEvents.get(indexThatDay).split(",\\s*", 6);
-//                        System.out.println("\u001B[91mCancel\u001B[0m\t\t\t\t\t\t\t\t\t\t\u001B[97mChange\u001B[0m\nStatus:\t\t\t\t|\t" + splitStatus[0] + "\nEvent types:\t\t|\t" + splitStatus[1] + "\nNumber of Visitors: |\t" + splitStatus[2] + "\nSelected menu:\t\t|\t" + splitStatus[5] + "\nTotal price: \t\t|\t" + splitStatus[3] +" (сом)\nService:\t\t\t|\t" + splitStatus[4] + "%\n\t\t\t\t\t\t\t\t\t\t\t <\u001B[92mexit\u001B[0m");
+//                        System.out.println("<\u001B[92mexit\u001B[0m\t\t\t\t\t\t\t\u001B[91mdelete\u001B[0m\t\u001B[97mchange\u001B[0m\nStatus:\t\t\t\t|\t" + splitStatus[0] + "\nEvent type:\t\t\t|\t" + splitStatus[1] + "\nVisitors: \t\t\t|\t" + splitStatus[2] + "\nSelected menu:\t\t|\t" + splitStatus[5] + "\nTotal price: \t\t|\t" + splitStatus[3] +" (сом)\nService:\t\t\t|\t" + splitStatus[4] + "%");
 //                        getInput = scanner.nextLine();
-//                        if(getInput.equalsIgnoreCase("cancel")) {
+//                        if("delete".contains(getInput.trim().toLowerCase())) {
 //                            events.statusEvents.remove(indexThatDay);
 //                            events.markedDays.remove(indexThatDay);
-//                        } else if (getInput.equalsIgnoreCase("change")) {
+//                            break;
+//                        } else if ("change".contains(getInput.trim().toLowerCase())) {
 //                            while(true) {
-//                                System.out.println("<\u001B[92mexit\u001B[0m\t\t\tA\t\t\t\tB\t\t\t\tC\n\t\t\tEvent type | Number of visitors | Menu ");
-//                                getInput = scanner.next();
-//                                if(getInput.equalsIgnoreCase("A")) {
-//                                    System.out.println("\u001B[97mEvent type\u001B[0m\n\u001B[91m|\u001B[0m " + splitStatus[1] + " \u001B[91m|\u001B[0m\n");
-//                                    splitStatus[1] = changeEvent(splitStatus[1]);
+//                                System.out.println("<\u001B[92mexit\n\t\t\u001B[91m| \u001B[97mStatus \u001B[91m|  | \u001B[97mTypes \u001B[91m|  | \u001B[97mVisitors \u001B[91m|  | \u001B[97mMenu \u001B[91m|  | \u001B[97mPrice \u001B[91m|  | \u001B[97mService \u001B[91m|\u001B[0m");
+//                                getInput = scanner.nextLine();
+//                                if ("status".contains(getInput.trim().toLowerCase())) {
+//                                    System.out.println("\u001B[97mStatus\u001B[0m\n\u001B[91m|\u001B[0m " + splitStatus[0] + " \u001B[91m|\u001B[0m");
+//                                    System.out.println("\t\t\t•\u001B[94mscheduled\u001B[0m\t\t•\u001B[35mcompleted\u001B[0m");
+//                                    getInput = scanner.nextLine();
+//                                    if("scheduled".contains(getInput.trim().toLowerCase())) {
+//                                        events.statusEvents.set(indexThatDay, "scheduled" + "," + splitStatus[1] + "," + splitStatus[2] + "," + splitStatus[3] + "," + splitStatus[4] + "," + splitStatus[5]);
+//                                    } else if ("completed".contains(getInput.trim().toLowerCase())) {
+//                                        events.statusEvents.set(indexThatDay, "completed" + "," + splitStatus[1] + "," + splitStatus[2] + "," + splitStatus[3] + "," + splitStatus[4] + "," + splitStatus[5]);
+//                                    }
+//                                } else if("types".contains(getInput.trim().toLowerCase())) {
+//                                    System.out.println("\u001B[97mType\u001B[0m\n\u001B[91m|\u001B[0m " + splitStatus[1] + " \u001B[91m|\u001B[0m\n");
+//                                    System.out.println("\t\t\t\t\t\t\t\u001B[94mEVENT TYPE\u001B[0m\n\t\u001B[97mA\u001B[0m \u001B[90mСвадьба\t\t\u001B[97mB\u001B[0m \u001B[90mКуран окутуу\t\t\t\t\t\u001B[97mC\u001B[0m \u001B[90mДень рождение\n\t\u001B[97mD\u001B[0m \u001B[90mТой\t\t\t\u001B[97mE\u001B[0m \u001B[90mИндивидуальный предзаказ\t\t\u001B[97mF\u001B[0m \u001B[90mКорпоративная вечеринка\u001B[0m" );
+//                                    getInput = scanner.nextLine();
+//                                    splitStatus[1] = eventType(getInput);
 //                                    events.statusEvents.set(indexThatDay, splitStatus[0] + "," + splitStatus[1] + "," + splitStatus[2] + "," + splitStatus[3] + "," + splitStatus[4] + "," + splitStatus[5]);
-//                                } else if (getInput.equalsIgnoreCase("B")) {
-//                                    System.out.println("\u001B[97mNumber of visitors\u001B[0m\n\u001B[91m|\u001B[0m " + splitStatus[2] + " \u001B[91m|\u001B[0m\n");
-//                                    splitStatus[2] = changeEvent(splitStatus[2]);
-//                                    events.statusEvents.set(indexThatDay, splitStatus[0] + "," + splitStatus[1] + "," + splitStatus[2] + "," + splitStatus[3] + "," + splitStatus[4] + "," + splitStatus[5]);
-//                                } else if (getInput.equalsIgnoreCase("C")) {
+//                                } else if ("visitors".contains(getInput.trim().toLowerCase())) {
+//                                    System.out.println("\u001B[97mVisitors\u001B[0m\n\u001B[91m|\u001B[0m " + splitStatus[2] + " \u001B[91m|\u001B[0m\n");
+//                                    String newAmount = scanner.nextLine();
+//                                    while(true) {
+//                                        System.out.println(splitStatus[2] + " --> \u001B[97m" + newAmount + "\u001B[0m\n\t\t\u001B[97mcancel\u001B[0m\t\u001B[92msave\u001B[0m");
+//                                        getInput = scanner.nextLine();
+//                                        if("cancel".contains(getInput.toLowerCase())) {
+//                                            break;
+//                                        } else if ("save".contains(getInput.toLowerCase())) {
+//                                            splitStatus[2] = newAmount;
+//                                            events.statusEvents.set(indexThatDay, splitStatus[0] + "," + splitStatus[1] + "," + splitStatus[2] + "," + splitStatus[3] + "," + splitStatus[4] + "," + splitStatus[5]);
+//                                            break;
+//                                        }
+//                                    }
+//                                } else if ("menu".contains(getInput.trim().toLowerCase())) {
 //                                    events.displayMenu();
 //                                    System.out.println("\u001B[97mMenu\u001B[0m\n\u001B[91m|\u001B[0m " + splitStatus[5] + " \u001B[91m|\u001B[0m");
 //                                    splitStatus[5] = changeEvent(splitStatus[5]);
@@ -116,25 +266,33 @@ public class Main {
 //                                    int servicePercentage = Integer.parseInt(splitStatus[4]);
 //                                    int totalPrice = generateTotalPrice(menu.controlSnacks, menu.controlFirst, menu.controlSecond, splitChangedMenu, servicePercentage);
 //                                    events.statusEvents.set(indexThatDay, splitStatus[0] + "," + splitStatus[1] + "," + splitStatus[2] + "," + totalPrice + "," + splitStatus[4] + "," + splitStatus[5]);
+//                                } else if ("price".contains(getInput.trim().toLowerCase())) {
+//
+//
+//                                } else if ("service".contains(getInput.trim().toLowerCase())) {
+//                                    System.out.println("\u001B[97mService\u001B[0m\n\u001B[91m|\u001B[0m " + splitStatus[4] + " \u001B[91m|\u001B[0m\n");
 //                                }
-//                                if(getInput.equalsIgnoreCase("exit")) {
-//                                    scanner.nextLine();
+//                                if("exit".contains(getInput.trim().toLowerCase())) {
 //                                    break;
 //                                }
+////                                if(getInput.equalsIgnoreCase("exit")) {
+////                                    scanner.nextLine();
+////                                    break;
+////                                }
 //                            }
-//                        } else if (getInput.equalsIgnoreCase("exit")) {
+//                        } else if ("exit".contains(getInput.trim().toLowerCase())) {
 //                            break;
 //                        }
 //                    }
 //                } else {
-//                    System.out.println("\u001B[97mEvent type\u001B[0m\t\tA. Свадьба\t\tB. Куран окутуу\t\tC. День рождение\n\t\t\t\tD. Той\t\tE. Индивидуальный предзаказ\t\tF. Корпоративная вечеринка" );
+//                    System.out.println("\t\t\t\t\t\t\t\u001B[94mEVENT TYPE\u001B[0m\n\t\u001B[97mA\u001B[0m \u001B[90mСвадьба\t\t\u001B[97mB\u001B[0m \u001B[90mКуран окутуу\t\t\t\t\t\u001B[97mC\u001B[0m \u001B[90mДень рождение\n\t\u001B[97mD\u001B[0m \u001B[90mТой\t\t\t\u001B[97mE\u001B[0m \u001B[90mИндивидуальный предзаказ\t\t\u001B[97mF\u001B[0m \u001B[90mКорпоративная вечеринка\u001B[0m" );
 //                    String getEventType = scanner.nextLine();
 //                    System.out.print("\u001B[97mNumber of visitors\u001B[0m: ");
 //                    String getNumberOfVisitors = scanner.nextLine();
 //                    events.displayMenu();
 //                    System.out.println("\n(\u001B[91mInstructions\u001B[0m) Write down the name of dishes separated by a comma.\n");
 //                    String getSelectDishes = scanner.nextLine();
-//                    String[] splitSelectedDishes = getSelectDishes.split(",\\s*");
+//                    String[] splitSelectedDishes = getSelectDishes.trim().split(",\\s*");
 //                    System.out.print("Enter service percentage: ");
 //                    int servicePercentage = scanner.nextInt();
 //                    scanner.nextLine();
@@ -142,11 +300,11 @@ public class Main {
 //                    while(true) {
 //                        System.out.println("Event types:\t\t|\t" + eventType(getEventType) + "\nNumber of Visitors: |\t" + getNumberOfVisitors + "\nSelected menu:\t\t|\t" + getSelectDishes + "\nTotal price:\t\t|\t" + totalPrice + " (сом)\t\nService:\t\t\t|\t" + servicePercentage + "%\n\t\t\t\u001B[91mcancel\u001B[0m\t\t\u001B[92msave\u001B[0m");
 //                        getInput = scanner.nextLine();
-//                        if(getInput.equalsIgnoreCase("save")) {
+//                        if("save".contains(getInput.trim().toLowerCase())) {
 //                            events.markedDays.add(selectedTime);
-//                            events.statusEvents.add("scheduled," + eventType(getEventType) + "," + getNumberOfVisitors + "," + totalPrice + "," + servicePercentage + ","+ getSelectDishes);
+//                            events.statusEvents.add("scheduled," + eventType(getEventType) + "," + getNumberOfVisitors + "," + totalPrice + "," + servicePercentage + ","+ getSelectDishes.trim());
 //                            break;
-//                        } else if (getInput.equalsIgnoreCase("cancel")) {
+//                        } else if ("cancel".contains(getInput.trim().toLowerCase())) {
 //                            break;
 //                        }
 //                    }
@@ -155,63 +313,109 @@ public class Main {
 //            events.displayDate();
 //        }
 
-        restaurant.restaurantsData.add("KHAN, Ankara 28, Nurmukhanbet, 45, ON");
+//  Restaurant
+//        restaurant.restaurantsData.add("KHAN, Ankara 28, ADILET, 45, ON");
+//        while(true) {
+//            restaurant.showRestaurants();
+//            String getInput = scanner.nextLine();
+//            if("add".contains(getInput.toLowerCase())) {
+//                prepareRestData(restaurant.restaurantsData);
+//            } else if ("exit".contains(getInput.toLowerCase())) {
+//                break;
+//            } else if(isContains(restaurant.restaurantsData, getInput.toUpperCase())) {
+//                int indexOfRest = getIndex(restaurant.restaurantsData, getInput.toUpperCase());
+//                while(true) {
+//                    String restData = restaurant.restaurantsData.get(indexOfRest);
+//                    String[] splitRestData = restData.split(",\\s*");
+//                    System.out.println("\t\t\t\u001B[91m|\u001B[0m \u001B[97m" + splitRestData[0] + "\u001B[0m \u001B[91m|\u001B[0m\n<\u001B[91mexit\u001B[0m\t\t\t\t\t\u001B[92mchange\u001B[0m\nAddress\t\t\t|\t" + splitRestData[1] + "\nManager\t\t\t|\t" + splitRestData[2] + "\nHalls\t\t\t|\t" + splitRestData[3] + "\nStatus\t\t\t|\t" + splitRestData[4]);
+//                    getInput = scanner.nextLine();
+//                    if("exit".contains(getInput.toLowerCase())) {
+//                        break;
+//                    } else if ("change".contains(getInput.toLowerCase())) {
+//                        while(true) {
+//                            System.out.println("<\u001B[91mexit\u001B[0m\n\t\t\u001B[91m|\u001B[0m \u001B[97mName\u001B[0m \u001B[91m|\u001B[0m  \u001B[91m|\u001B[0m \u001B[97mAddress\u001B[0m \u001B[91m|\u001B[0m  \u001B[91m|\u001B[0m \u001B[97mManager\u001B[0m \u001B[91m|\u001B[0m  \u001B[91m|\u001B[0m \u001B[97mHalls\u001B[0m \u001B[91m|\u001B[0m  \u001B[91m|\u001B[0m \u001B[97mStatus\u001B[0m \u001B[91m|\u001B[0m");
+//                            getInput = scanner.nextLine();
+//                            if("exit".contains(getInput.toLowerCase())) {
+//                                break;
+//                            } else {
+//                                if("NAME".contains(getInput.toUpperCase())) {
+//                                    System.out.print("New name: ");
+//                                    changeRestData(restaurant.restaurantsData, restData, splitRestData, indexOfRest, 0);
+//                                } else if ("ADDRESS".contains(getInput.toUpperCase())) {
+//                                    System.out.print("New address: ");
+//                                    changeRestData(restaurant.restaurantsData, restData, splitRestData, indexOfRest, 1);
+//                                } else if ("MANAGER".contains(getInput.toUpperCase())) {
+//                                    System.out.print("New manager: ");
+//                                    changeRestData(restaurant.restaurantsData, restData, splitRestData, indexOfRest, 2);
+//                                } else if ("HALLS".contains(getInput.toUpperCase())) {
+//                                    System.out.print("New halls: ");
+//                                    changeRestData(restaurant.restaurantsData, restData, splitRestData, indexOfRest, 3);
+//                                } else if ("STATUS".contains(getInput.toUpperCase())) {
+//                                    while (true) {
+//                                        System.out.println("\t\t\t•\u001B[92mON\u001B[0m\t\t•\u001B[91mOFF\u001B[0m");
+//                                        getInput = scanner.nextLine();
+//                                        if("ON".contains(getInput.toUpperCase())) {
+//                                            String replacedRestData = restData.replace(splitRestData[4], "ON");
+//                                            restaurant.restaurantsData.set(indexOfRest, replacedRestData);
+//                                            break;
+//                                        } else if ("OFF".contains(getInput.toUpperCase())) {
+//                                            String replacedRestData = restData.replace(splitRestData[4], "OFF");
+//                                            restaurant.restaurantsData.set(indexOfRest, replacedRestData);
+//                                            break;
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+    }
+
+    public static void changeUsersData (ArrayList<String> managersData, String oldChar, String managerData, int index) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("  Name\n  \u001B[91m| \u001B[97m " + oldChar + " \u001B[91m|\u001B[0m");
+        String newChar = scanner.nextLine();
+        if (oldChar.matches(".*[A-ZА-Я].*")) {
+            newChar = newChar.toUpperCase();
+        }
         while(true) {
-            restaurant.showRestaurants();
+            System.out.println("\u001B[91m" + oldChar + "\u001B[0m --> \u001B[97m" + newChar + "\u001B[0m\n\t\t\u001B[97mcancel\u001B[0m\t\u001B[92msave\u001B[0m");
             String getInput = scanner.nextLine();
-            if("add".contains(getInput.toLowerCase())) {
-                prepareRestData(restaurant.restaurantsData);
-            } else if ("exit".contains(getInput.toLowerCase())) {
+            if ("cancel".contains(getInput.trim().toLowerCase())) {
                 break;
-            } else if(isContains(restaurant.restaurantsData, getInput.toUpperCase())) {
-                int indexOfRest = getIndex(restaurant.restaurantsData, getInput.toUpperCase());
-                while(true) {
-                    String restData = restaurant.restaurantsData.get(indexOfRest);
-                    String[] splitRestData = restData.split(",\\s*");
-                    System.out.println("\t\t\t\u001B[91m|\u001B[0m \u001B[97m" + splitRestData[0] + "\u001B[0m \u001B[91m|\u001B[0m\n<\u001B[91mexit\u001B[0m\t\t\t\t\t\u001B[92mchange\u001B[0m\nAddress\t\t\t|\t" + splitRestData[1] + "\nManager\t\t\t|\t" + splitRestData[2] + "\nHalls\t\t\t|\t" + splitRestData[3] + "\nStatus\t\t\t|\t" + splitRestData[4]);
-                    getInput = scanner.nextLine();
-                    if("exit".contains(getInput.toLowerCase())) {
-                        break;
-                    } else if ("change".contains(getInput.toLowerCase())) {
-                        while(true) {
-                            System.out.println("<\u001B[91mexit\u001B[0m\n\t\t\u001B[91m|\u001B[0m \u001B[97mName\u001B[0m \u001B[91m|\u001B[0m  \u001B[91m|\u001B[0m \u001B[97mAddress\u001B[0m \u001B[91m|\u001B[0m  \u001B[91m|\u001B[0m \u001B[97mManager\u001B[0m \u001B[91m|\u001B[0m  \u001B[91m|\u001B[0m \u001B[97mHalls\u001B[0m \u001B[91m|\u001B[0m  \u001B[91m|\u001B[0m \u001B[97mStatus\u001B[0m \u001B[91m|\u001B[0m");
-                            getInput = scanner.nextLine();
-                            if("exit".contains(getInput.toLowerCase())) {
-                                break;
-                            } else {
-                                if("NAME".contains(getInput.toUpperCase())) {
-                                    System.out.print("New name: ");
-                                    changeRestData(restaurant.restaurantsData, restData, splitRestData, indexOfRest, 0);
-                                } else if ("ADDRESS".contains(getInput.toUpperCase())) {
-                                    System.out.print("New address: ");
-                                    changeRestData(restaurant.restaurantsData, restData, splitRestData, indexOfRest, 1);
-                                } else if ("MANAGER".contains(getInput.toUpperCase())) {
-                                    System.out.print("New manager: ");
-                                    changeRestData(restaurant.restaurantsData, restData, splitRestData, indexOfRest, 2);
-                                } else if ("HALLS".contains(getInput.toUpperCase())) {
-                                    System.out.print("New halls: ");
-                                    changeRestData(restaurant.restaurantsData, restData, splitRestData, indexOfRest, 3);
-                                } else if ("STATUS".contains(getInput.toUpperCase())) {
-                                    while (true) {
-                                        System.out.println("\t\t\t•\u001B[92mON\u001B[0m\t\t•\u001B[91mOFF\u001B[0m");
-                                        getInput = scanner.nextLine();
-                                        if("ON".contains(getInput.toUpperCase())) {
-                                            String replacedRestData = restData.replace(splitRestData[4], "ON");
-                                            restaurant.restaurantsData.set(indexOfRest, replacedRestData);
-                                            break;
-                                        } else if ("OFF".contains(getInput.toUpperCase())) {
-                                            String replacedRestData = restData.replace(splitRestData[4], "OFF");
-                                            restaurant.restaurantsData.set(indexOfRest, replacedRestData);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            } else if ("save".contains(getInput.trim().toLowerCase())) {
+                String changedManagerData = managerData.replace(oldChar, newChar);
+                managersData.set(index, changedManagerData);
+                break;
             }
         }
+    }
+
+    public static boolean isCorrectData (String correctName, String correctPassword, int attempt) {
+        Scanner scanner = new Scanner(System.in);
+        while(true) {
+            if(attempt <= 3) {
+                System.out.println("Left \u001B[91m" + attempt + "\u001B[0m attempts!");
+                if(attempt == 0) {
+                    System.out.println("\u001B[91mblocked\u001B[0m");
+                    break;
+                }
+            }
+            System.out.print("Enter your name: ");
+            String userName = scanner.nextLine();
+            System.out.print("Enter password: ");
+            String usersPassword = scanner.nextLine();
+            scanner.nextLine();
+            if(correctName.equals(userName) && correctPassword.equals(usersPassword)) {
+                return true;
+            } else {
+                System.out.println("\u001B[91mIncorrect username or password\u001B[0m!");
+            }
+            attempt--;
+        }
+        return false;
     }
 
     public static void changeRestData(ArrayList<String> restaurantsData, String restData, String[] splitRestData, int indexOfRest, int indexCategory) {
@@ -329,21 +533,21 @@ public class Main {
         }
     }
 
-    public static boolean isContains (ArrayList<String> listDishes, String getInput) {
-        for(String dishName : listDishes) {
-            if(dishName.contains(getInput)) {
+    public static boolean isContains (ArrayList<String> list, String getInput) {
+        for(String name : list) {
+            if(name.contains(getInput)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static int getIndex (ArrayList<String> listDishes, String getInput) {
-        String dishName;
+    public static int getIndex (ArrayList<String> list, String getInput) {
+        String name;
         int i = 0;
-        while (i < listDishes.size()) {
-            dishName = listDishes.get(i);
-            if(dishName.contains(getInput)) {
+        while (i < list.size()) {
+            name = list.get(i);
+            if(name.contains(getInput)) {
                 return i;
             }
             i++;

@@ -56,13 +56,20 @@ public class Events extends Menu{
             int month = Integer.parseInt(splitThatDay[1]);
             int day = Integer.parseInt(splitThatDay[2]);
             if(calendarDay == day && calendar.getMonthValue() == month && calendar.getYear() == year) {
-                if (calendar.getDayOfMonth() > calendarDay) {
+                if (calendar.isBefore(LocalDate.now())) {
                     splitStatus[0] = "completed";
                     statusEvent = splitStatus[0] + "," + splitStatus[1];
                     statusEvents.set(i,statusEvent);
                     System.out.print("\u001B[35m" + calendarDay + "\u001B[0m" + "\t\t\t");
-                } else if(splitStatus[0].equalsIgnoreCase("Scheduled")) {
+                } else if (calendar.getDayOfMonth() > day && !calendar.isAfter(LocalDate.now())) {
+                    splitStatus[0] = "completed";
+                    statusEvent = splitStatus[0] + "," + splitStatus[1];
+                    statusEvents.set(i,statusEvent);
+                    System.out.print("\u001B[35m" + calendarDay + "\u001B[0m" + "\t\t\t");
+                } else if(splitStatus[0].equalsIgnoreCase("Scheduled")  ) {
                     System.out.print("\u001B[94m" + calendarDay + "\u001B[0m" + "\t\t\t");
+                } else if (splitStatus[0].equalsIgnoreCase("completed")) {
+                    System.out.print("\u001B[35m" + calendarDay + "\u001B[0m" + "\t\t\t");
                 } else {
                     System.out.print(calendarDay + "\t\t\t");
                 }
