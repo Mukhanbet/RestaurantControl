@@ -29,6 +29,26 @@ public class Events extends Menu{
         displayDishes(controlSecond);
     }
 
+    void displayEvents () {
+        System.out.println("<\u001B[92mexit\u001B[0m");
+        int countEvent = 0;
+        for(int i = 1; i <= calendar.lengthOfMonth(); i++) {
+            if(isDateMarked(markedDays, statusEvents, calendar, i)) {
+                int day = i;
+                String markedTime = calendar.getYear() + " " + calendar.getMonthValue() + " " + day;
+                int indexThatDay = markedDays.indexOf(markedTime);
+                String[] splitStatus = statusEvents.get(indexThatDay).split(",\\s*", 6);
+                System.out.println("\nTime:\t\t\t\t|\t" + markedTime + "\nStatus:\t\t\t\t|\t" + splitStatus[0] + "\nEvent type:\t\t\t|\t" + splitStatus[1] + "\nVisitors: \t\t\t|\t" + splitStatus[2] + "\nSelected menu:\t\t|\t" + splitStatus[5] + "\nTotal price: \t\t|\t" + splitStatus[3] +" (сом)\nService:\t\t\t|\t" + splitStatus[4] + "%");
+                countEvent++;
+            }
+        }
+
+        if(countEvent == 0) {
+            System.out.println("\t\t\t\t\u001B[90mEmpty\u001B[0m\n");
+        }
+    }
+
+
 
     void displayDate () {
         System.out.println("\u001B[97m" + calendar.getYear() + "\u001B[0m\t\t\t\t\t\t\t\t<\u001B[91mback\u001B[0m\t\u001B[94mnext\u001B[0m>\n" + "\u001B[91m" + calendar.getMonth() + "\u001B[0m\n");

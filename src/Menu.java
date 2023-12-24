@@ -6,7 +6,7 @@ public class Menu {
     ArrayList<String> controlSecond = new ArrayList<>();
 
     void displayCategoryMenu() {
-        System.out.println("SNACKS\t\t\tFIRST\t\t\tSECOND");
+        System.out.println("\t\u001B[97mSNACKS\t\tFIRST\t\tSECOND\u001B[0m");
     }
     void displaySnacks() {
         System.out.println("\t\t\t\t\t\t\t\u001B[94mSNACKS\u001B[0m");

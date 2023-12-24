@@ -9,7 +9,7 @@ public class Manager{
     }
 
     void displayMainScreen() {
-        System.out.println("Menu\t\t\t\tEvents\t\t\t\tTables");
+        System.out.println("\u001B[91mclose\n\t\t\t\t\u001B[94mMAIN SCREEN\n\n\t\t\t\u001B[91m| \u001B[97mEvents \u001B[91m|  | \u001B[97mMenu \u001B[91m|\u001B[0m\n");
     }
 }
 
